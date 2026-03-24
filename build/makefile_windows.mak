@@ -11,9 +11,7 @@ run:
 	rmdir /s /q bin
 
 test:
-	cls
 	go test ./...
 
 test-pretty:
-	cls
 	gest ./...

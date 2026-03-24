@@ -16,11 +16,9 @@ run:
 	@rm -rf $(BIN_DIR)
 
 test:
-	clear
 	go test ./...
 
 test-pretty:
-	clear
 	gest ./...
 
 clean:
