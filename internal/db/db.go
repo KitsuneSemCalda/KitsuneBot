@@ -44,3 +44,74 @@ func Setup(path string) error {
 	DB, err = InitDB(path)
 	return err
 }
+
+func InsertMessage(db *sql.DB, user, content string) error {
+	_, err := db.Exec("INSERT INTO messages (user, content, preprocessed_content) VALUES (?, ?, ?)", user, content, "")
+	return err
+}
+
+func GetMessages(db *sql.DB) ([]Message, error) {
+	rows, err := db.Query("SELECT id, user, content, preprocessed_content, timestamp FROM messages ORDER BY timestamp DESC")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var messages []Message
+	for rows.Next() {
+		var msg Message
+		if err := rows.Scan(&msg.ID, &msg.User, &msg.Content, &msg.PreprocessedContent, &msg.Timestamp); err != nil {
+			return nil, err
+		}
+		messages = append(messages, msg)
+	}
+
+	return messages, nil
+}
+
+func GetMessagesByUser(db *sql.DB, user string) ([]Message, error) {
+	rows, err := db.Query("SELECT id, user, content, preprocessed_content, timestamp FROM messages WHERE user = ? ORDER BY timestamp DESC", user)
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var messages []Message
+
+	for rows.Next() {
+		var msg Message
+		if err := rows.Scan(&msg.ID, &msg.User, &msg.Content, &msg.PreprocessedContent, &msg.Timestamp); err != nil {
+			return nil, err
+		}
+		messages = append(messages, msg)
+	}
+
+	return messages, nil
+}
+
+func DeleteMessage(db *sql.DB, id int) error {
+	_, err := db.Exec("DELETE FROM messages WHERE id = ?", id)
+	return err
+}
+
+func GetMessageByID(db *sql.DB, id int) (*Message, error) {
+	row := db.QueryRow("SELECT id, user, content, preprocessed_content, timestamp FROM messages WHERE id = ?", id)
+	var msg Message
+	err := row.Scan(&msg.ID, &msg.User, &msg.Content, &msg.PreprocessedContent, &msg.Timestamp)
+	if err != nil {
+		return nil, err
+	}
+	return &msg, nil
+}
+
+func UpdateMessage(db *sql.DB, id int, content, preprocessedContent string) error {
+	_, err := db.Exec("UPDATE messages SET content = ?, preprocessed_content = ? WHERE id = ?", content, preprocessedContent, id)
+	return err
+}
+
+func GetMessageCount(db *sql.DB) (int, error) {
+	var count int
+	err := db.QueryRow("SELECT COUNT(*) FROM messages").Scan(&count)
+	return count, err
+}

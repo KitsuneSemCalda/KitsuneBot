@@ -9,5 +9,5 @@ type Message struct {
 	User                string
 	Content             string
 	PreprocessedContent string
-	Timesamp            time.Time
+	Timestamp           time.Time
 }
