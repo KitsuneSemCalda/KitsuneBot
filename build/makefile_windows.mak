@@ -4,6 +4,7 @@ all: build run
 
 build:
 	if not exist bin mkdir bin
+	go mod tidy
 	go build -o bin\kitsune_bot.exe cmd\kitsune_bot\main.go
 run:
 	bin\kitsune_bot.exe
