@@ -9,6 +9,7 @@ all: build run
 build:
 	@mkdir -p $(BIN_DIR)
 	go mod tidy
+	export CGO_ENABLED=1
 	go build -o $(BIN_DIR)/$(APP_NAME) $(CMD_PATH)/main.go
 
 run:

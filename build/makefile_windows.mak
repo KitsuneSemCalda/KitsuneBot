@@ -1,17 +1,23 @@
-.PHONY: all build run test
+.PHONY: all build run test test-pretty clean
 
-all: build
+APP_NAME = kitsune_bot
+BIN_DIR  = bin
+CMD_PATH = cmd\kitsune_bot
+
+all: build run
 
 build:
-	if not exist bin mkdir bin
+	if not exist $(BIN_DIR) mkdir $(BIN_DIR)
 	go mod tidy
-	go build -o bin\kitsune_bot.exe cmd\kitsune_bot\main.go
+	@cmd /C "set CGO_ENABLED=1 && go build -o $(BIN_DIR)\$(APP_NAME).exe $(CMD_PATH)\main.go" || powershell -Command "$env:CGO_ENABLED=1; go build -o $(BIN_DIR)\$(APP_NAME).exe $(CMD_PATH)\main.go"
 run:
-	bin\kitsune_bot.exe
-	rmdir /s /q bin
+	$(BIN_DIR)\$(APP_NAME).exe
 
 test:
 	go test ./...
 
 test-pretty:
 	gest ./...
+
+clean:
+	if exist $(BIN_DIR) rmdir /s /q $(BIN_DIR)
