@@ -1,0 +1,4 @@
+github.com/caiolandgraf/gest/v2 v2.0.5 h1:oKrMaqv2cFZDMaTJAu4oxWzLAUydP3SMVJuNp8tVgZU=
+github.com/caiolandgraf/gest/v2 v2.0.5/go.mod h1:5P7t581G1rDgfURkkeiNMaw7UX5SsRfvGettzwvGn2g=
+github.com/mattn/go-sqlite3 v1.14.37 h1:3DOZp4cXis1cUIpCfXLtmlGolNLp2VEqhiB/PARNBIg=
+github.com/mattn/go-sqlite3 v1.14.37/go.mod h1:Uh1q+B4BYcTPb+yiD3kU8Ct7aC0hY9fxUwlHK0RXw+Y=
