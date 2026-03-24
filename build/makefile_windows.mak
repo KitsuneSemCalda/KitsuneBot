@@ -1,6 +1,6 @@
 .PHONY: all build run test
 
-all: build run
+all: build
 
 build:
 	if not exist bin mkdir bin
