@@ -36,6 +36,9 @@ A simple yet evolving Twitch bot written in Go, combining smart moderation with 
 
 ### Build
 
+>[!WARNING]
+> Check if CGO_ENABLE=1 before building, this is a necessary dependencie from functional database
+
 ```bash
 make build
 ``` 
