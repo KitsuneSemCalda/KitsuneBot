@@ -1,4 +1,4 @@
-.PHONY: all build run tests
+.PHONY: all build run test
 
 all: build run
 
@@ -9,6 +9,10 @@ run:
 	bin\kitsune_bot.exe
 	rmdir /s /q bin
 
-tests:
+test:
 	cls
 	go test ./...
+
+test-pretty:
+	cls
+	gest ./...
