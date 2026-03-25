@@ -139,5 +139,32 @@ func TestGetMessagesByUser(t *testing.T) {
 			t.Expect(messages[0].Content).ToEqual("msg2")
 			t.Expect(messages[1].Content).ToEqual("msg1")
 		}).
+		It("should handle SQL injection in user filter", func(t *gest.T) {
+			err := db.Setup(":memory:")
+			t.Expect(err).ToBeNil()
+			defer db.DB.Close()
+
+			db.InsertMessage(db.DB, "user1", "msg1")
+			db.InsertMessage(db.DB, "user2", "msg2")
+
+			messages, err := db.GetMessagesByUser(db.DB, "user1' OR '1'='1")
+			t.Expect(err).ToBeNil()
+			t.Expect(messages).ToHaveLength(0)
+		}).
+		It("should return all fields correctly", func(t *gest.T) {
+			err := db.Setup(":memory:")
+			t.Expect(err).ToBeNil()
+			defer db.DB.Close()
+
+			db.InsertMessage(db.DB, "testuser", "testcontent")
+
+			messages, err := db.GetMessages(db.DB)
+			t.Expect(err).ToBeNil()
+			t.Expect(messages).ToHaveLength(1)
+			t.Expect(messages[0].ID).Not().ToEqual(0)
+			t.Expect(messages[0].User).ToEqual("testuser")
+			t.Expect(messages[0].Content).ToEqual("testcontent")
+			t.Expect(messages[0].Timestamp).Not().ToBeNil()
+		}).
 		Run(t)
 }

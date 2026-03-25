@@ -92,5 +92,41 @@ func TestInsertMessage(t *testing.T) {
 			t.Expect(err).ToBeNil()
 			t.Expect(len(msg.Content)).ToEqual(10000)
 		}).
+		It("should allow empty user (SQLite behavior)", func(t *gest.T) {
+			err := db.Setup(":memory:")
+			t.Expect(err).ToBeNil()
+			defer db.DB.Close()
+
+			err = db.InsertMessage(db.DB, "", "content")
+			t.Expect(err).ToBeNil()
+
+			messages, err := db.GetMessages(db.DB)
+			t.Expect(err).ToBeNil()
+			t.Expect(messages[0].User).ToEqual("")
+		}).
+		It("should handle user with special characters", func(t *gest.T) {
+			err := db.Setup(":memory:")
+			t.Expect(err).ToBeNil()
+			defer db.DB.Close()
+
+			err = db.InsertMessage(db.DB, "user'db", "content")
+			t.Expect(err).ToBeNil()
+
+			msg, err := db.GetMessageByID(db.DB, 1)
+			t.Expect(err).ToBeNil()
+			t.Expect(msg.User).ToEqual("user'db")
+		}).
+		It("should store preprocessed_content as empty by default", func(t *gest.T) {
+			err := db.Setup(":memory:")
+			t.Expect(err).ToBeNil()
+			defer db.DB.Close()
+
+			err = db.InsertMessage(db.DB, "user1", "hello")
+			t.Expect(err).ToBeNil()
+
+			msg, err := db.GetMessageByID(db.DB, 1)
+			t.Expect(err).ToBeNil()
+			t.Expect(msg.PreprocessedContent).ToEqual("")
+		}).
 		Run(t)
 }
