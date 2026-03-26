@@ -1,4 +1,8 @@
+github.com/adeithe/go-twitch v0.4.2 h1:C9RjnJoxzpAMDfmDRcS/0T/9U4fAohq5De9wlF5YXGU=
+github.com/adeithe/go-twitch v0.4.2/go.mod h1:tzliBAniAFUVC6W97GmV8uNvh5LzDS+SqK9wnEum9Jc=
 github.com/caiolandgraf/gest/v2 v2.0.5 h1:oKrMaqv2cFZDMaTJAu4oxWzLAUydP3SMVJuNp8tVgZU=
 github.com/caiolandgraf/gest/v2 v2.0.5/go.mod h1:5P7t581G1rDgfURkkeiNMaw7UX5SsRfvGettzwvGn2g=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/mattn/go-sqlite3 v1.14.37 h1:3DOZp4cXis1cUIpCfXLtmlGolNLp2VEqhiB/PARNBIg=
 github.com/mattn/go-sqlite3 v1.14.37/go.mod h1:Uh1q+B4BYcTPb+yiD3kU8Ct7aC0hY9fxUwlHK0RXw+Y=
