@@ -22,11 +22,15 @@ func (r *HandlerRegistry) Register(handler Handler) {
 	r.handlers[handler.Name()] = handler
 }
 
+func (r *HandlerRegistry) Count() int {
+	return len(r.handlers)
+}
+
 func (r *HandlerRegistry) HandleMessage(msg irc.ChatMessage) (string, error) {
 	if len(msg.Text) == 0 || msg.Text[0] != '!' {
 		return "", nil
 	}
-	parts := parseCommand(msg.Text)
+	parts := ParseCommand(msg.Text)
 	if len(parts) == 0 {
 		return "", nil
 	}
@@ -37,7 +41,8 @@ func (r *HandlerRegistry) HandleMessage(msg irc.ChatMessage) (string, error) {
 	}
 	return handler.Handle(msg)
 }
-func parseCommand(msg string) []string {
+
+func ParseCommand(msg string) []string {
 	var parts []string
 	current := ""
 	for _, ch := range msg {
